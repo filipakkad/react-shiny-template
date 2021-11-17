@@ -54,3 +54,12 @@ npm start
 
 And you are ready to go! 
 
+---
+
+Once you decide you app is ready you need to build it and place it inside your Shiny project, by running the command:
+``` console
+npm run build
+```
+
+Now, you can run your Shiny app as usual. 
+
