@@ -1,0 +1,9 @@
+default:
+  webapp_dir: "./www/build"
+  shiny_port: 3939
+  shiny_autoreload: FALSE
+
+dev:
+  webapp_dir: "./React/dist"
+  shiny_port: 3838
+  shiny_autoreload: TRUE
