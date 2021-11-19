@@ -141,7 +141,7 @@ On `React` side:
 ``` javascript 
 const App = () => {
   const sendMessage = (e) => {
-	  window.Shiny.setInputValue("message_from_react", e.target.value);
+    window.Shiny.setInputValue("message_from_react", e.target.value);
   };
   
   return <input type="text" onChange={sendMessage} />
