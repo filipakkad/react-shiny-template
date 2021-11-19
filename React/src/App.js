@@ -54,11 +54,11 @@ function App() {
 					<input type="text" onChange={sendMessage} />
 				</p>
 				<p>
-					And here <code>ggplot</code> fetched from Shiny:
+					And here <code>ggplot</code> fetched from Shiny through REST API:
 				</p>
 				<img src={shinyUrls.ggplot_url_svg} alt="GGPLOT2" />
 				<p>
-					And below counties from <code>midwest</code> dataset fetched from Shiny:
+					And below counties from <code>midwest</code> dataset fetched from Shiny through REST API:
 				</p>
 				<ul>{item_list}</ul>
 			</header>
