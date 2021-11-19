@@ -1,5 +1,5 @@
-![Maintcainer](https://img.shields.io/badge/maintainer-filpro-blue)
-[![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)](https://GitHub.com/filpro)
+![Maintcainer](https://img.shields.io/badge/maintainer-filipakkad-blue)
+[![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)](https://GitHub.com/filipakkad)
 
 
 # React - Shiny Template
