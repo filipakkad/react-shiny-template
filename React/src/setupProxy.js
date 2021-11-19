@@ -1,4 +1,4 @@
-const { createProxyMiddleware } = require('http-proxy-middleware');
+const { createProxyMiddleware } = require("http-proxy-middleware");
 
 module.exports = (app) => {
 	app.use(
@@ -6,7 +6,7 @@ module.exports = (app) => {
 			target: "ws://localhost:3838",
 		})
 	);
-    app.use(
+	app.use(
 		createProxyMiddleware("/autoreload", {
 			target: "ws://localhost:3838",
 		})

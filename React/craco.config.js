@@ -3,6 +3,6 @@ module.exports = {
 		writeToDisk: (filePath) => {
 			return !filePath.includes("hot-update");
 		},
-    open: false
-	}
+		open: false,
+	},
 };
