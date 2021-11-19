@@ -12,7 +12,7 @@ This setup is allowing the user to build frontend in pure [React.js](https://rea
 But one may ask - why?
 
 1. By splitting frontend and backend R/Shiny developer can now collaborate with React developer on creating beautiful, modern web applications.
-2. Shiny server won't be needed for generating UI (everything on the browser side).
+2. Shiny server won't wouldn't be involved in generating UI (everything on the browser side).
 3. UI part is no longer dependent on R wrappers of JS libraries. 
 4. You are able now to take advantage of:
     - [Material UI](https://mui.com/getting-started/usage/), [PrimeReact](https://primefaces.org/primereact/showcase/), [Fluent UI](https://developer.microsoft.com/en-us/fluentui#/controls/web), [React-Bootstrap](), [Blueprint](https://blueprintjs.com/docs/), [Ant Design](https://ant.design/components/overview/) and many other great UI libraries.
