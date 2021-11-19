@@ -104,21 +104,19 @@ library(shiny)
 
 server <- function(input, output, session) {
   #...
-  session$sendCustomMessage("message_from_shiny", "HI, THIS IS A MESSAGE FROM SHINY")
+  session$sendCustomMessage("message_from_shiny", "I AM THE MESSAGE FROM SHINY SERVER")
 }
 ```
 
 On `React` side:
 
 ``` javascript 
-const MyComponent = () => {
+const App = () => {
   const [shinyMessage, setShinyMessage] = useState(null);
   
-  window.Shiny.addCustomMessageHandler('message_from_shiny', function(message) => {
-  /* Whatever action you need to do with the data */
-    console.log(message);
-    setShinyMessage(message);
-  })
+  window.Shiny.addCustomMessageHandler("message_from_shiny", (msg) => {
+    setShinyMessage(msg);
+  });
   
   return <p>{shinyMessage}</p>
 }
@@ -141,12 +139,12 @@ server <- function(input, output, session) {
 On `React` side:
 
 ``` javascript 
-const MyComponent = () => {
-  const sendMessage = () => {
-    window.Shiny.setInputValue('message_from_react', 'This a message from React!')
-  }
+const App = () => {
+  const sendMessage = (e) => {
+	  window.Shiny.setInputValue("message_from_react", e.target.value);
+  };
   
-  return <button onClick={sendMessage}>Send message to Shiny!</button>
+  return <input type="text" onChange={sendMessage} />
 }
 ```
 
@@ -189,18 +187,21 @@ On `Shiny` server side:
 library(shiny)
 library(jsonlite)
 library(dplyr)
+library(ggplot2)
 
 server <- function(input, output, session) {
   #...
-  data <- mtcars
   
-  example_get_api_url <- session$registerDataObj(
+  return_data <- ggplot2::midwest
+  
+  #' Endpoint for getting the data
+  example_get_data_url <- session$registerDataObj(
     name = "example-get-api",
     data = list(), # Empty list, we are not sharing any object
     # That's the place where the request is being handled
     filterFunc = function(data, req) {
       if (req$REQUEST_METHOD == "GET") {
-        response <- data
+        response <- return_data
         response %>%
           toJSON(auto_unbox = TRUE) %>%
           shiny:::httpResponse(200, "application/json", .)
@@ -211,7 +212,7 @@ server <- function(input, output, session) {
   session$sendCustomMessage(
     "shiny_api_urls",
     list(
-      example_get_api_url = example_get_api_url
+      example_get_data_url = example_get_data_url
     )
   )
 }
@@ -220,7 +221,7 @@ server <- function(input, output, session) {
 On `React` side:
 
 ``` javascript 
-const MyComponent = () => {
+const App = () => {
   const [urls, setUrls] = useState(null);
   const [data, setData] = useState([]);
   
@@ -230,11 +231,13 @@ const MyComponent = () => {
   })
   
   const fetchData = async (urls) => {
-    const fetchedData = await fetch(urls.example_get_api_url).then(data => data.json());
+    const fetchedData = await fetch(urls.example_get_data_url).then(data => data.json());
     setData(fetchedData);
   }
   
-  const item_list = data.map(item => <li>{item.mpg}</li>);
+  const item_list = data.map((item) => (
+    <li key={item.PID}>{`${item.county} (${item.state})`}</li>
+  ));
 
   return <ul>{item_list}</ul>
 }
