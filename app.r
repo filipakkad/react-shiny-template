@@ -2,7 +2,8 @@ library(shiny)
 library(ggplot2)
 library(svglite)
 library(config)
-library(magrittr)
+library(dplyr)
+library(jsonlite)
 
 
 generate_ggplot <- function() {
@@ -36,7 +37,8 @@ ui <- function() {
 }
 
 server <- function(input, output, session) {
-  
+
+  #' Endpoint for fetching ggplot (as svg)
   ggplot_url_svg <- session$registerDataObj(
     name = "example_plot_svg",
     data = list(),
@@ -50,11 +52,34 @@ server <- function(input, output, session) {
       }
     }
   )
-  
-  session$sendCustomMessage("hello_react", "I AM THE MESSAGE FROM SHINY SERVER")
+
+  return_data <- ggplot2::midwest
+
+  #' Endpoint for fetching data
+  example_get_data_url <- session$registerDataObj(
+    name = "example-get-data-api",
+    data = list(),
+    filterFunc = function(data, req) {
+      if (req$REQUEST_METHOD == "GET") {
+        response <- return_data
+        response %>%
+          toJSON(auto_unbox = TRUE) %>%
+          shiny:::httpResponse(200, "application/json", .)
+      }
+    }
+  )
+
+  observeEvent(input$message_from_react, {
+    print(input$message_from_react)
+  })
+
+  session$sendCustomMessage("message_from_shiny", "I AM THE MESSAGE FROM SHINY SERVER")
+
+  #' Inform React about endpoints
   session$sendCustomMessage("urls", {
     list(
-      ggplot_url_svg = ggplot_url_svg
+      ggplot_url_svg = ggplot_url_svg,
+      example_get_data_url = example_get_data_url
     )
   })
 }
