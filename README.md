@@ -16,6 +16,7 @@ But one may ask - why?
 3. UI part is no longer dependent on R wrappers of JS libraries. 
 4. You are able now to take advantage of:
     - [Material UI](https://mui.com/getting-started/usage/), [PrimeReact](https://primefaces.org/primereact/showcase/), [Fluent UI](https://developer.microsoft.com/en-us/fluentui#/controls/web), [React-Bootstrap](), [Blueprint](https://blueprintjs.com/docs/), [Ant Design](https://ant.design/components/overview/) and many other great UI libraries.
+    - static typing with [TypeScript](https://www.typescriptlang.org/)
     - [mobx](https://www.mobxjs.com/), [redux](https://redux.js.org/) for state management
     - modern tools for designing React components - e.g. [Storybook](https://storybook.js.org/docs/react/get-started/introduction), [styled-components](https://styled-components.com/)
     - solutions addressing performance issues - e.g. [react-virtualized](https://github.com/bvaughn/react-virtualized)/[react-window](https://github.com/bvaughn/react-window) for rendering huge lists
