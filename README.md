@@ -4,33 +4,44 @@
 
 # React 🤝 Shiny Template
 
-[**See the demo**](https://akkido.shinyapps.io/react_shiny_template/)
+[**See the minimalistic DEMO**](https://akkido.shinyapps.io/react_shiny_template/)
 
 ## React developers - welcome on (dash) board!
 
-This setup is allowing the user to build frontend in pure [React.js](https://reactjs.org/) whereas keep the backend in [Shiny](https://shiny.rstudio.com/).
+This setup is allowing the user to build frontend in pure **[React.js](https://reactjs.org/)** whereas keep the backend/logic in **[Shiny](https://shiny.rstudio.com/)**.
+
 But one may ask - why?
 
-1. By splitting frontend and backend R/Shiny developer can now collaborate with React developer on creating beautiful, modern web applications.
-2. Shiny server wouldn't be involved in generating UI (everything on the browser side).
+1. By breaking the monolithic structure of Shiny app into frontend & backend we are able to apply modern standards and patterns for building beautiful web applications with React.
+2. Shiny server wouldn't have to be involved in generating UI.
 3. UI part is no longer dependent on R wrappers of JS libraries. 
 4. You are able now to take advantage of:
     - [Material UI](https://mui.com/getting-started/usage/), [PrimeReact](https://primefaces.org/primereact/showcase/), [Fluent UI](https://developer.microsoft.com/en-us/fluentui#/controls/web), [React-Bootstrap](), [Blueprint](https://blueprintjs.com/docs/), [Ant Design](https://ant.design/components/overview/) and many other great UI libraries.
     - static typing with [TypeScript](https://www.typescriptlang.org/) ❤️
     - using [JSX](https://reactjs.org/docs/introducing-jsx.html) ❤️
     - [mobx](https://www.mobxjs.com/), [redux](https://redux.js.org/) for state management
-    - modern tools for designing React components - e.g. [Storybook](https://storybook.js.org/docs/react/get-started/introduction), [styled-components](https://styled-components.com/)
-    - solutions addressing performance issues - e.g. [react-virtualized](https://github.com/bvaughn/react-virtualized)/[react-window](https://github.com/bvaughn/react-window) for rendering huge lists
+    - modern tools for designing/styling React components - e.g. [Storybook](https://storybook.js.org/docs/react/get-started/introduction), [styled-components](https://styled-components.com/)
+    - solutions addressing performance issues - e.g. [react-virtualized](https://github.com/bvaughn/react-virtualized)/[react-window](https://github.com/bvaughn/react-window) for [rendering huge lists](https://reactjs.org/docs/optimizing-performance.html#virtualize-long-lists)
     - support from large React community
+    - the best standards and patterns for building standards
     - (many many others)
+  5. The React app is built as a static page therefore it can be placed as a static resource in Shiny project. It implies that **nothing changes in terms of the deployment e.g. to RStudio Connect**). 
+
+### For whom?
+  - You are a Shiny developer passionate about React or 
+  - You would like to collaborate with a React developer on your Shiny dashboard 
+
+then **this setup is for you!**
+
+Otherwise you might be interested in using [`shiny.react`](https://appsilon.github.io/shiny.react/) and packages based on top of that (e.g. [`shiny.fluent`](https://appsilon.github.io/shiny.fluent/)). Here is nice example of [how to wrap Blueprint with `shiny.react`](https://appsilon.github.io/shiny.react/articles/shiny-react.html)
 
 ## Setup
 
 The setup allows for:
-1. Building the app and then using it with Shiny
-2. Using [Node server for development](https://create-react-app.dev/docs/getting-started/#npm-start-or-yarn-start) (to see changes made live)
+1. Using [Node server for development](https://create-react-app.dev/docs/getting-started/#npm-start-or-yarn-start) (to see changes made live)
+2. Building the React app as a stiatic page and then using it with Shiny
 
-The React app has been set up using [`create-react-app`](https://create-react-app.dev/docs/getting-started). Small modifications were required to make the setup working, however I wanted to avoid [`ejecting`](https://create-react-app.dev/docs/available-scripts#npm-run-eject) as this one-way operation breaks support from `create-react-app`. Instead I used [`craco`](https://github.com/gsoft-inc/craco) for overriding `webpack` configuration (without resigning from support from `create-react-app`). This way we kind of have our cake and eat it 🙂
+The React app itself has been initialized with [`create-react-app`](https://reactjs.org/docs/create-a-new-react-app.html), so in case you need to perform some more sophisticated operations please take a look at the [documentation](https://reactjs.org/docs/getting-started.html)
 
 # Launching the app
 
@@ -54,7 +65,7 @@ Make sure you have all the `R` dependencies installed:
 renv::restore()
 ```
 
-Then you need to go to React directory inside the project
+Then you need to go to React directory inside the project (terminal):
 
 ``` console
 cd React
@@ -90,11 +101,9 @@ There are basically three ways how React app can communicate with Shiny backend:
   > You can also learn more about communication between JS and R through websocket [HERE](https://shiny.rstudio.com/articles/communicating-with-js.html)
   3. [React ⇄ Shiny (REST API)](#3-react--shiny-rest-api)
 
+> **NOTE 1**: no `ui` function is being presented assuming that all the `UI` is being handled by `React` app
 
-
-The examples given below aim to present just the idea of how the connection could be established (putting aside applicable design patterns).
-
-> **NOTE**: no `ui` function is being presented assuming that all the `UI` is being handled by `React` app
+> **NOTE 2**: The examples given below aim to present just the idea of how the connection could be established (putting aside applicable design patterns).
 
 ### 1. Shiny → React (websocket)
 #### Example
@@ -154,7 +163,7 @@ const App = () => {
 This is probably the least popular way of communicating with Shiny server. However, there are many benefits from using it:
 
 1. Thanks to the stateless nature of `REST API` you can manage the app state solely in `React` (with help of e.g. [`mobx`](https://mobx.js.org/), [`redux`](https://redux.js.org/))
-2. You don't need to configure two way communication whenever React needs anything from Shiny (i.e. [approach 1](#1-shiny--react-websocket) combined with [approach 2](#2-react--shiny-websocket))
+2. You don't need to configure two-way websocket communication whenever React needs anything from Shiny (i.e. [approach 1](#1-shiny--react-websocket) combined with [approach 2](#2-react--shiny-websocket))
 3. It would be potentially easier to replace Shiny with any other `REST API` backend
 
 Existence of `REST API` in the Shiny package given out of the box is a great and promising feature. However, *out of the box* doesn’t actually mean transparent in a sense that the developer must combine certain - not intuitively named or easily accessible - functions in order to achieve it:
