@@ -16,6 +16,7 @@
   },
   "scripts": {
     "start": "concurrently \"craco start\" \"Rscript 'run_shiny.R'\"",
+    "start-react-only": "craco start",
     "build": "react-scripts build && rm -rf ../www/build/* && mv build ../www",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
