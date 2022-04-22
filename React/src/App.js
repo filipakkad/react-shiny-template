@@ -34,7 +34,7 @@ function App() {
 		setData(fetchedData);
 	};
 
-	const item_list = data.map((item) => (
+	const itemsList = data.map((item) => (
 		<li key={item.PID}>{`${item.county} (${item.state})`}</li>
 	));
 
@@ -89,7 +89,7 @@ function App() {
 						>
 							Reload list
 						</button>
-						<ul>{item_list}</ul>
+						<ul>{itemsList}</ul>
 					</div>
 				</div>
 			</header>

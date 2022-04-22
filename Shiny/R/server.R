@@ -1,5 +1,5 @@
 server <- function(input, output, session) {
-
+  showNotification("Hello new Shiny session!")
   #' Generating REST API endpoints and sending links to React
   #' Endpoint 1 for fetching ggplot (as svg)
   ggplot_url_svg <- session$registerDataObj(

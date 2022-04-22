@@ -42,51 +42,65 @@ then **this setup is for you!**
 ## Setup
 
 The setup allows for:
-1. Using [Node server for development](https://create-react-app.dev/docs/getting-started/#npm-start-or-yarn-start) (to see changes made live)
+1. Using [`Node.js` server for the development](https://create-react-app.dev/docs/getting-started/#npm-start-or-yarn-start) (to see changes made live)
 2. Building the React app as a static page and then using it with Shiny
 
 The React app itself has been initialized with [`create-react-app`](https://reactjs.org/docs/create-a-new-react-app.html), so in case you need to perform some more sophisticated operations please take a look at the [documentation](https://reactjs.org/docs/getting-started.html)
 
 # Launching the app
 
-Make sure you have all the `R` dependencies installed:
+  1. Make sure you have all the `R` dependencies installed:
 
-``` r
-renv::restore()
+``` console
+npm run install_shiny
 ```
 
-Then you launch the app like any other Shiny app
-``` r
-shiny::runApp()
+> Or from the `Shiny` subfolder
+> ``` r
+> renv::restore()
+> ```
+
+  2. Then you launch the `Shiny` app
+
+``` console
+npm run prod
 ```
+
+> Or from the `Shiny` subfolder in an usual way:
+>``` r
+>shiny::runApp()
+>```
 
 # Development
-## Starting development server
+## Starting the development server
 
-Make sure you have all the `R` dependencies installed:
-
-``` r
-renv::restore()
-```
-
-Then you need to go to React directory inside the project (terminal):
+  1. Make sure you have all the `R` dependencies installed:
 
 ``` console
-cd React
+npm run install_shiny
 ```
-If you are starting the development for the first time you need to install all the dependencies:
+
+  2. If you are starting the development for the first time you need to install all the `JS` dependencies:
 
 ``` console
-npm install
+npm run install_react
 ```
 
-And then you need to start both the Node development server and the Shiny app. You can do both just by running the command:
+  3. Then you need to start both:
+    
+    a. the `Node.js` development server: 
 
 ``` console
-npm start
+npm run start_react
 ```
 
-And you are ready to go! 
+    b.  the `Shiny` app:
+
+``` console
+npm run start_shiny
+```
+
+And you are ready to go!
 
 ---
 
@@ -96,7 +110,19 @@ Once you decide your React app is ready you need to build it and place it inside
 npm run build
 ```
 
-Now, you can run your Shiny app as usual. 
+Now, you can run your Shiny app:
+
+``` console
+npm run prod
+```
+
+> Or from the `Shiny` subfolder in an usual way:
+>``` R
+>shiny::runApp()
+>```
+
+
+
 
 ## Communication between Shiny and React
 

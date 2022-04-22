@@ -7,5 +7,5 @@ prod:
   shiny_autoreload: FALSE
 
 dev:
-  webapp_dir: "./React/dist"
+  webapp_dir: "../React/build"
   shiny_autoreload: TRUE

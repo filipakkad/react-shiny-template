@@ -1,0 +1,24 @@
+{
+  "name": "react_shiny_template",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "prod": "cd Shiny && Rscript run_shiny.R",
+    "dev": "npm run start_react && npm run start_shiny",
+    "start_react": "npm start --prefix React",
+    "start_shiny": "cd Shiny && Rscript run_shiny.R dev",
+    "build": "npm run build --prefix React  && rm -rf Shiny/www/build/* && mv React/build Shiny/www",
+    "install_react": "npm install --prefix React",
+    "install_shiny": "cd Shiny && Rscript -e \"renv::restore()\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/filipakkad/react_shiny_template.git"
+  },
+  "author": "Filip Akkad",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/filipakkad/react_shiny_template/issues"
+  },
+  "homepage": "https://github.com/filipakkad/react_shiny_template#readme"
+}

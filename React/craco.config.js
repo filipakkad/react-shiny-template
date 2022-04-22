@@ -1,8 +1,11 @@
+const path = require("path");
 module.exports = {
 	devServer: {
-		writeToDisk: (filePath) => {
-			return !filePath.includes("hot-update");
+		devMiddleware: {
+			writeToDisk: (filePath) => {
+				return !filePath.includes("hot-update");
+			},
+			publicPath: 'asd/'
 		},
-		open: false,
 	},
 };

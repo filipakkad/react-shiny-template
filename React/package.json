@@ -7,24 +7,17 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
-    "concurrently": "^6.4.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-scripts": "^4.0.3",
+    "react-scripts": "^5.0.1",
+    "rewire": "^6.0.0",
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "start": "concurrently \"craco --openssl-legacy-provider start\" \"Rscript 'run_shiny.R' dev\"",
-    "start-react-only": "craco --openssl-legacy-provider start ",
-    "build": "react-scripts build && rm -rf ../www/build/* && mv build ../www",
+    "start": "craco --openssl-legacy-provider start",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
   },
   "browserslist": {
     "production": [
@@ -39,7 +32,7 @@
     ]
   },
   "devDependencies": {
-    "@craco/craco": "^6.4.3",
+    "@craco/craco": "v7.0.0-alpha.3",
     "http-proxy-middleware": "^2.0.1"
   }
 }
