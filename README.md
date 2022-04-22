@@ -87,19 +87,24 @@ npm run install_react
 ```
 
   3. Then you need to start both:
+  
+      a. the `Node.js` development server: 
+
+      ``` console
+      npm run start_react
+      ```
+      b.  the `Shiny` app:
+
+     ``` console
+     npm run start_shiny
+     ```
+
+
+  >If using Linux or MAC OS you can run simply:
+  >``` console
+  >npm run dev
+  >```
     
-    a. the `Node.js` development server: 
-
-``` console
-npm run start_react
-```
-
-    b.  the `Shiny` app:
-
-``` console
-npm run start_shiny
-```
-
 And you are ready to go!
 
 ---
