@@ -5,7 +5,6 @@ module.exports = {
 			writeToDisk: (filePath) => {
 				return !filePath.includes("hot-update");
 			},
-			publicPath: 'asd/'
 		},
 	},
 };

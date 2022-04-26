@@ -8,7 +8,7 @@ library(purrr)
 
 config <- config::get()
 options(shiny.port = 3838)
-options(shiny.autoreload = config$shiny_autoreload)
+options(shiny.autoreload = FALSE)
 options(shiny.autoload.r = TRUE)
 
 WEBAPP_DIR <- config$webapp_dir

@@ -1,4 +1,4 @@
-args = commandArgs(trailingOnly=TRUE)
+args <- commandArgs(trailingOnly = TRUE)
 if (is.null(args[1])) {
     r_config_active <- "prod"
 } else {

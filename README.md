@@ -107,6 +107,8 @@ npm run install_react
     
 And you are ready to go!
 
+>Sometimes your development app may behave strange (like restarting the session). Please try to clear the cache (in Chrome by `Shift` + `F5`)
+
 ---
 
 Once you decide your `React` app is ready you need to build it and place it inside your `Shiny` project. You can do it by running the command:
