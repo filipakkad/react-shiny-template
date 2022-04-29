@@ -18,15 +18,18 @@ server <- function(input, output, session) {
     }
   )
 
-  #' Example dataset
-  return_data <- ggplot2::midwest
-  #' Endpoint 2 for fetching data
-  example_get_data_url <- session$registerDataObj(
-    name = "example-get-data-api",
+  example_get_people_url <- session$registerDataObj(
+    name = "example-get-people-api",
     data = list(),
     filterFunc = function(data, req) {
       if (req$REQUEST_METHOD == "GET") {
-        response <- return_data[sample(5), ]
+        n <- 500000
+        response <- dplyr::tibble(
+          first_name = randomNames::randomNames(n, which.names = "first"),
+          last_name = randomNames::randomNames(n, which.names = "last"),
+          age = as.integer(runif(n, 0, 70)),
+          image_url = paste0("https://picsum.photos/40/40?", sample(letters, n, replace = TRUE))
+        )
         response %>%
           toJSON(auto_unbox = TRUE) %>%
           httpResponse(200, "application/json", .)
@@ -39,7 +42,7 @@ server <- function(input, output, session) {
   session$sendCustomMessage("urls", {
     list(
       ggplot_url_svg = ggplot_url_svg,
-      example_get_data_url = example_get_data_url
+      example_get_people_url = example_get_people_url
     )
   })
 
@@ -51,5 +54,5 @@ server <- function(input, output, session) {
   })
 
   #' Send the message
-  session$sendCustomMessage("message_from_shiny", "I AM THE MESSAGE FROM SHINY SERVER 🎉")
+  session$sendCustomMessage("message_from_shiny", "HELLO FROM SHINY SERVER 🎉")
 }

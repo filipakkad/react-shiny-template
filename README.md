@@ -157,7 +157,7 @@ library(shiny)
 
 server <- function(input, output, session) {
   #...
-  session$sendCustomMessage("message_from_shiny", "I AM THE MESSAGE FROM SHINY SERVER")
+  session$sendCustomMessage("message_from_shiny", "HELLO FROM SHINY SERVER!")
 }
 ```
 

@@ -2,13 +2,15 @@ import { useState } from 'react';
 import logo from './logo.svg';
 import shinyLogo from './shiny_logo.png';
 import './App.css';
+import PeopleTable from './Table';
 
 function App() {
 	const [shinyMessage, setShinyMessage] = useState('');
 	const [shinyUrls, setShinyUrls] = useState('');
 	const [ggplotTitle, setGgplotTitle] = useState('');
 	const [ggplotUrl, setGgplotUrl] = useState(null);
-	const [data, setData] = useState([]);
+	const [peopleData, setPeopleData] = useState([]);
+	const [isLoadingPeopleData, setIsLoadingPeopleData] = useState(false);
 
 	/* Receiving the data through websocket */
 	window.Shiny.addCustomMessageHandler('message_from_shiny', (msg) => {
@@ -23,23 +25,18 @@ function App() {
 	/* Receiving REST API URLs */
 	window.Shiny.addCustomMessageHandler('urls', (urls) => {
 		setShinyUrls(urls);
-		fetchData(urls);
 		updatePlot(urls.ggplot_url_svg)
 	});
 
-	const fetchData = async (urls) => {
-		const fetchedData = await fetch(urls.example_get_data_url).then((data) =>
-			data.json()
-		);
-		setData(fetchedData);
-	};
-
-	const itemsList = data.map((item) => (
-		<li key={item.PID}>{`${item.county} (${item.state})`}</li>
-	));
+	const fetchPeopleData = async (urls) => {
+		setIsLoadingPeopleData(true);
+		await fetch(urls.example_get_people_url).then((data) => data.json()).then((data) => {
+			setPeopleData(data);
+		}).finally(() => setIsLoadingPeopleData(false));
+	}
 
 	const updateData = () => {
-		fetchData(shinyUrls);
+		fetchPeopleData(shinyUrls);
 	};
 
 	const updatePlot = (url) => {
@@ -53,7 +50,7 @@ function App() {
 					<img src={logo} className='App-logo' alt='logo' />
 					<img src={shinyLogo} className='App-logo' alt='logo' />
 				</div>
-				<p>I AM THE MESSAGE FROM REACT</p>
+				<p>HELLO FROM REACT</p>
 				<i>whereas</i>
 				<p>{shinyMessage}</p>
 				<p>but hey, you can send message back to Shiny (check your logs or notification):</p>
@@ -79,7 +76,7 @@ function App() {
 					</div>
 					<div className='shiny-section'>
 						<p>
-							And below random counties from <code>midwest</code> dataset
+							And below randomly generated data using <code>randomNames</code> package
 							fetched from Shiny through REST API:
 						</p>
 						<button
@@ -87,9 +84,9 @@ function App() {
 							onClick={updateData}
 							className='shiny-button'
 						>
-							Reload list
+							Generate list
 						</button>
-						<ul>{itemsList}</ul>
+						{isLoadingPeopleData ? <p>Generating 500,000 rows</p>: peopleData.length ? <PeopleTable data={peopleData}/> : null}
 					</div>
 				</div>
 			</header>
