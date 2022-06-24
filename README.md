@@ -20,7 +20,7 @@ But one may ask - why?
     - static typing with [TypeScript](https://www.typescriptlang.org/) ❤️
     - using [JSX](https://reactjs.org/docs/introducing-jsx.html) ❤️
     - [mobx](https://www.mobxjs.com/), [redux](https://redux.js.org/) for state management
-    - modern tools for designing/styling `React` components - e.g. [Storybook](https://storybook.js.org/docs/react/get-started/introduction), [styled-components](https://styled-components.com/)
+    - modern tools for creating your design system/styling `React` components - e.g. [Storybook](https://storybook.js.org/docs/react/get-started/introduction), [styled-components](https://styled-components.com/)
     - solutions addressing performance issues - e.g. [react-virtualized](https://github.com/bvaughn/react-virtualized)/[react-window](https://github.com/bvaughn/react-window) for [rendering huge lists](https://reactjs.org/docs/optimizing-performance.html#virtualize-long-lists)
     - support from large `React` community
     - the best standards of building web applications and patterns
@@ -29,15 +29,16 @@ But one may ask - why?
 
 ### For whom?
   - You are a `Shiny` developer passionate about `React` / willing to apply the latest standards of developing frontend or 
+  - You would like to reuse existing components from your other `React` applications or
   - You would like to collaborate with a `React` developer on your `Shiny` dashboard to make it even more awesome
-  
+
   And
-  
-  - You want to deploy your app the same way as other, standard `Shiny` apps
+
+  - You want to deploy your app the same way as other, regular `Shiny` apps
 
 then **this setup is for you!**
 
-> Otherwise you might be interested in using [`shiny.react`](https://appsilon.github.io/shiny.react/) and packages based on top of that (e.g. [`shiny.fluent`](https://appsilon.github.io/shiny.fluent/)). Here is a nice example of [how to wrap Blueprint with `shiny.react`](https://appsilon.github.io/shiny.react/articles/shiny-react.html)
+> Otherwise you might be interested in using [`shiny.react`](https://appsilon.github.io/shiny.react/) and packages based on top of that (e.g. [`shiny.fluent`](https://appsilon.github.io/shiny.fluent/)). Here is a nice example of [how to wrap Liquid Oxygen library with `shiny.react`](https://appsilon.github.io/shiny.react/articles/shiny-react.html)
 
 ## Setup
 
@@ -141,11 +142,11 @@ There are basically three ways how a `React` app can communicate a `Shiny` backe
 
   > You can also learn more about communication between JS and R through websocket [HERE](https://shiny.rstudio.com/articles/communicating-with-js.html)
 
-  3. [`React` ⇄ `Shiny` (REST API)](#3-react--shiny-rest-api)
+  3. [`React` ⇄ `Shiny` (HTTP API)](#3-react--shiny-http-api)
 
 > **NOTE 1**: no `ui` function is being presented assuming that all the `UI` is being handled by `React` app
 
-> **NOTE 2**: The examples given below aim to present just the idea of how the connection could be established (putting aside applicable design patterns).
+> **NOTE 2**: The examples given below aim to present just the rough idea of how the connection could be established (putting aside applicable design patterns or great tools you could use - like [`react-query`](https://react-query.tanstack.com/)).
 
 ### 1. `Shiny` → `React` (WebSocket)
 
@@ -204,17 +205,17 @@ const App = () => {
 }
 ```
 
-### 3. `React` ⇄ `Shiny` ([REST API](https://www.ibm.com/cloud/learn/rest-apis))
+### 3. `React` ⇄ `Shiny` (HTTP API)
 
 #### Description
 
 This is probably the least popular way of communicating with `Shiny` server. However, there are many benefits from using it:
 
-1. Thanks to the stateless nature of `REST API` you can manage the app state solely in `React` (with a help of e.g. [`mobx`](https://mobx.js.org/), [`redux`](https://redux.js.org/))
+1. Thanks to the stateless nature of `HTTP API` you can manage the app state solely in `React` (with a help of e.g. [`mobx`](https://mobx.js.org/), [`redux`](https://redux.js.org/))
 2. You don't need to configure two-way WebSocket communication whenever `React` needs anything from `Shiny` (i.e. [approach 1](#1-shiny--react-websocket) combined with [approach 2](#2-react--shiny-websocket))
-3. It would be potentially easier to replace `Shiny` with any other `REST API` backend
+3. It would be potentially easier to replace `Shiny` with any other `HTTP API` backend
 
-The existence of `REST API` in the `Shiny` package given out of the box is a great and promising feature. However, *out of the box* does not actually mean transparent in a sense that the developer must combine certain - not intuitively named or well documented - functions in order to achieve it:
+The existence of `HTTP API` in the `Shiny` package given out of the box is a great and promising feature. However, *out of the box* does not actually mean transparent in a sense that the developer must combine certain - not intuitively named or well documented - functions in order to achieve it:
 
 - [`session$registerDataObj(name, data, filterFunc)`](https://shiny.rstudio.com/reference/shiny/latest/session.html)
 - [`shiny::httpResponse(status, content_type, content, headers)`](https://shiny.rstudio.com/reference/shiny/latest/httpResponse.html)
@@ -307,13 +308,18 @@ const App = () => {
 
 # FAQ
 
-## How does `Shiny` REST API approach differ from [`Plumber`](https://www.rplumber.io/)?
+## Why `Shiny` HTTP API approach? What about [`Plumber`](https://www.rplumber.io/)?
 
-1. Plumber doesn’t offer WebSocket connection out of the box as `Shiny` does. In other words, with Plumber only the client is initiating a communication - by making a request - whereas Shiny allows for bidirectional initialization. Having that the developer can trigger things to happen from the server-side, e.g. send a notification/message to the browser.
 
-2. As the UI is a static web page **it can be part of the `Shiny` project**. Therefore the developer does not have to bother with separate servers/deployments for backend and frontend. **Deployment process to RStudio Connect will then be the same as for the standard `Shiny` app**.
+1. Plumber doesn’t offer WebSocket connection out of the box yet as `Shiny` does. In other words, with Plumber only the client is initiating a communication - by making a request - whereas Shiny allows for bidirectional initialization. Having that the developer can trigger things to happen from the server-side, e.g. send a notification/message to the browser.
 
-3. The session is still managed by Shiny (all the REST URLs contain a session token, so assuming that session token is secret the REST URLs might be considered as session-scoped). `React` app contains all `Shiny` dependencies (through [`{{ headContent() }}`](https://shiny.rstudio.com/articles/templates.html) used in [`htmlTemplate()`](https://shiny.rstudio.com/reference/shiny/latest/htmlTemplate.html) function), so when the session is over you can notice the characteristic grey page and notification about reloading the session.
+2. As the UI is a static web page **it can be part of the `Shiny` project**. Therefore the developer does not have to bother with separate servers/deployments for backend and frontend. **Deployment process to RStudio Connect will then be the same as for the standard `Shiny` app**. It could be particularly useful for the `Shiny` developers that want to keep their workflow.
+
+3. The session is still managed by `Shiny` (all the HTTP URLs contain a session token, so assuming that session token is secret the HTTP URLs might be considered as session-scoped). `React` app contains all `Shiny` dependencies (through [`{{ headContent() }}`](https://shiny.rstudio.com/articles/templates.html) used in [`htmlTemplate()`](https://shiny.rstudio.com/reference/shiny/latest/htmlTemplate.html) function), so when the session is over you can notice the characteristic grey page and notification about reloading the session.
+
+4. With this approach you can still benefit from `Shiny` reactivity when developing your backend.
+
+At the end of a day - everything depends on the case
 
 # Conclusions
 
@@ -324,7 +330,9 @@ const App = () => {
 3. The `React` app can be almost totally independent from `Shiny` (except initial WebSocket-based URL exchange) which:
     - makes the potential backend replacement much easier.
     - allows for concurrent development of the UI (e.g. by `React` developer) and server logic in `Shiny`.
-  
-4. Apart from a WebSocket `Shiny` offers session-scoped REST API out of the box.
 
-5. Such setup is pretty hard to implement on the existing projects, so one could consider it when starting a new one.
+4. Apart from a WebSocket `Shiny` offers session-scoped HTTP API out of the box.
+
+5. Such setup seems to be pretty hard to implement on the existing/grown up projects, so one could consider it when starting a new one.
+
+6. `React` ecosystem offers huge amount of cool features you can use directly in your `Shiny` app!

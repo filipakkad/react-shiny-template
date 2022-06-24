@@ -1,6 +1,6 @@
 server <- function(input, output, session) {
   showNotification("Hello new Shiny session!")
-  #' Generating REST API endpoints and sending links to React
+  #' Generating HTTP API endpoints and sending links to React
   #' Endpoint 1 for fetching ggplot (as svg)
   ggplot_url_svg <- session$registerDataObj(
     name = "example_plot_svg",
@@ -37,7 +37,7 @@ server <- function(input, output, session) {
     }
   )
 
-  #' Inform React about REST API endpoints through Websocket
+  #' Inform React about HTTP API endpoints through Websocket
   #' Otherwise React won't be able to use it
   session$sendCustomMessage("urls", {
     list(
