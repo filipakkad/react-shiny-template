@@ -2,7 +2,7 @@
 [![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)](https://GitHub.com/filipakkad)
 
 
-# React JS 🤝 Shiny Template
+# [React JS 🤝 Shiny] template
 
 [**See the minimalistic DEMO**](https://akkido.shinyapps.io/react_shiny_template/)
 
@@ -28,8 +28,8 @@ But one may ask - why?
 5. The `React` app is ultimately built as a static page therefore it can be placed as a static resource in our `Shiny` project (e.g. in `www` folder). It implies that **nothing changes in terms of the deployment e.g. to RStudio Connect**). 
 
 ### For whom?
-  - You are a `Shiny` developer passionate about `React` or 
-  - You would like to collaborate with a `React` developer on your `Shiny` dashboard 
+  - You are a `Shiny` developer passionate about `React` / willing to apply the latest standards of developing frontend or 
+  - You would like to collaborate with a `React` developer on your `Shiny` dashboard to make it even more awesome
   
   And
   
@@ -74,6 +74,8 @@ npm run prod
 # Development
 ## Starting the development server
 
+  > Required `Node.js` 16.x
+
   1. Make sure you have all the `R` dependencies installed:
 
 ``` console
@@ -98,7 +100,6 @@ npm run install_react
      ``` console
      npm run start_shiny
      ```
-
 
   >If using Linux or MAC OS you can run simply:
   >``` console
@@ -306,7 +307,7 @@ const App = () => {
 
 # FAQ
 
-## How does Shi`Shiny`ny REST API approach differ from [`Plumber`](https://www.rplumber.io/)?
+## How does `Shiny` REST API approach differ from [`Plumber`](https://www.rplumber.io/)?
 
 1. Plumber doesn’t offer WebSocket connection out of the box as `Shiny` does. In other words, with Plumber only the client is initiating a communication - by making a request - whereas Shiny allows for bidirectional initialization. Having that the developer can trigger things to happen from the server-side, e.g. send a notification/message to the browser.
 

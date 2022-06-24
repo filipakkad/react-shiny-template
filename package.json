@@ -20,11 +20,5 @@
   "bugs": {
     "url": "https://github.com/filipakkad/react_shiny_template/issues"
   },
-  "homepage": "https://github.com/filipakkad/react_shiny_template#readme",
-  "dependencies": {
-    "react": "^17.0.2",
-    "react-table": "^7.7.0",
-    "react-window": "^1.8.7",
-    "styled-components": "^5.3.5"
-  }
+  "homepage": "https://github.com/filipakkad/react_shiny_template#readme"
 }
